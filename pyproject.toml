@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "automated-selenium"
-version = "0.1.0"
+version = "1.1.0"
 description = "Automated-Selenium is a Python library that provides a base page class designed to facilitate the implementation of the Page Object Model (POM) structure in Selenium-based test automation projects."
 authors = ["Waqar Khan <waqarkhan1252617@gmail.com>"]
 license = "MIT"
