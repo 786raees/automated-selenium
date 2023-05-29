@@ -61,29 +61,47 @@ Note: Your element selector should be an instance of Selector class as follow.
 
    ```python
    class MyPage(BasePage):
+       logged_in = False
+       url = 'https://example.com'
+
+       def __init__(self, *args, **kwargs):
+         super().__init__(*args, **kwargs)
+         # call your web url here
+         self.driver.get(self.url)
+         
        # Add your custom methods and properties here
+       def check_login(self):
+         # check if the user is logged in
+         # perform some task to check login
+         # if user is logged in make self.logged_in = True
+         self.logged_in = True
+
        def login(self, username: str, password: str):
-         # Find username field
-         username_field = self.find(LoginResources.username_field)
-         # Type username like human
-         self.send_keys(username_field, username)
+         # check if user is already logged in
+         self.check_login()
+         if self.logged_in:
+            # Find username field
+            username_field = self.find(LoginResources.username_field)
+            # Type username like human
+            self.send_keys(username_field, username)
 
-         # Find password field
-         password_field = self.find(LoginResources.password_field)
-         # Type password like human
-         self.send_keys(password_field, password)
+            # Find password field
+            password_field = self.find(LoginResources.password_field)
+            # Type password like human
+            self.send_keys(password_field, password)
 
-         # Find submit button
-         submit_button = self.find(LoginResources.submit_button)
-         # click on submit button
-         self.click(submit_button)
-
-         # Return self if you want to chain your actions as follow.
-         # login_page = LoginPage(driver)
-         # login_page.check_login()\
-         #           .login()\
-         return self
-   ```
+            # Find submit button
+            submit_button = self.find(LoginResources.submit_button)
+            # click on submit button
+            self.click(submit_button)
+            # check if you are logged in successfully
+            self.check_login()
+            # Return self if you want to chain your actions as follow.
+            # login_page = LoginPage(driver)
+            # login_page.check_login()\
+            #           .login()\
+            return self
+      ```
 4. Now use this page object to login in your `main.py`.
    ```python
    from automated_selenium import get_undetected_chrome_browser
@@ -96,6 +114,8 @@ Note: Your element selector should be an instance of Selector class as follow.
       # Create a new driver instance
       driver = get_undetected_chrome_browser(profile_name)
       my_page = MyPage(driver)
+      # Perform some task here
+
       my_page.login(username='admin', password='automated_selenium')
 
    if __name__ == '__main__':
