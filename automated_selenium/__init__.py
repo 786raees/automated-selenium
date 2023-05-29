@@ -1,2 +1,3 @@
 from automated_selenium.drivers.undetected_driver import get_undetected_chrome_browser
 from automated_selenium.pages.base_page import BasePage
+from automated_selenium.resources.resources import Selector
